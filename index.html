@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VanguardSMP — Official Stream</title>
+  <meta name="description" content="VanguardSMP adalah server Minecraft dengan 300+ member aktif, tersedia untuk JAVA dan BEDROCK. Ayo bergabung sekarang juga!">
+  <link rel="icon" href="fanglogo.jpg" type="image/x-icon">
   <style>
     /* Reset dasar */
     * {
@@ -17,34 +19,39 @@
       background: #f5f6fa;
       color: #333;
       line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
     /* Header */
     header {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      display: flex;
+      justify-content: space-between;
       align-items: center;
       padding: 15px 30px;
       background: #0d1b2a;
       color: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
 
     header .brand {
-      grid-column: 2;          
-      text-align: center;      
-      font-size: 1.6rem;       
+      text-align: center;
+      font-size: 1.6rem;
       font-weight: 700;
     }
 
     header .brand span {
-      display: block;          
+      display: block;
       font-weight: 400;
       font-size: 0.9rem;
       color: #b0bec5;
-    }
-
-    header .logo-kanan {
-      text-align: right;
     }
 
     header .logo-kanan img {
@@ -53,42 +60,49 @@
       object-fit: cover;
       border-radius: 50%;
       border: 2px solid #fff;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease;
+    }
+
+    header .logo-kanan img:hover {
+      transform: rotate(10deg) scale(1.1);
     }
 
     /* Hero Section */
     .hero {
       text-align: center;
-      padding: 80px 20px;
+      padding: 90px 20px;
       background: linear-gradient(180deg, #2c3e50, #34495e);
       color: white;
     }
 
     .hero h1 {
-      font-size: 2rem;
+      font-size: 2.4rem;
       margin-bottom: 10px;
+      animation: fadeDown 1s ease-in-out;
     }
 
     .hero p {
       font-size: 1rem;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .hero .btn {
       display: inline-block;
       background: #1a4db3;
       color: #fff;
-      padding: 12px 28px;
+      padding: 14px 32px;
       border-radius: 8px;
-      text-decoration: none;
       font-weight: bold;
       transition: all 0.3s ease-in-out;
     }
 
     .hero .btn:hover {
       background: #0f3a91;
-      transform: scale(1.05);
-      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.35);
     }
 
     /* Section Info */
@@ -96,8 +110,8 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 20px;
-      padding: 60px 20px;
+      gap: 25px;
+      padding: 70px 20px;
       background: #fff;
     }
 
@@ -113,8 +127,8 @@
       transform: translateY(40px);
       display: flex;
       flex-direction: column;
-      justify-content: space-between; /* biar tombol di bawah */
-      min-height: 280px; /* kasih tinggi minimum */
+      justify-content: space-between;
+      min-height: 280px;
     }
 
     .card.show {
@@ -124,12 +138,12 @@
     }
 
     .card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+      transform: translateY(-6px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
     }
 
     .card h3 {
-      margin-bottom: 10px; /* sedikit rapat */
+      margin-bottom: 12px;
       color: #1a237e;
     }
 
@@ -139,27 +153,62 @@
       display: inline-block;
     }
 
-    /* khusus card versi minecraft */
-    .card:first-child ul {
-      margin-top: 5px;   /* rapatkan JAVA & BEDROCK ke judul */
+    .card ul li {
+      margin: 6px 0;
     }
 
-    .card ul li {
-      margin: 4px 0; /* lebih rapat biar naik */
+    /* Card untuk VERSI MINECRAFT */
+    #version-card {
+      background: white;
+      padding: 30px; /* Anda dapat mengubah padding sesuai kebutuhan */
+      border-radius: 15px;
+      width: 300px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(40px);
+      display: flex;
+      flex-direction: column;
+      min-height: 280px;
+    }
+
+    #version-card.show {
+      opacity: 1;
+      transform: translateY(0);
+      transition: all 0.6s ease-in-out;
+    }
+
+    #version-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+    }
+
+    #version-card h3 {
+      margin-bottom: 12px;
+      color: #1a237e;
+    }
+
+    #version-card ul {
+      text-align: left;
+      margin: 0 auto;
+      display: inline-block;
+    }
+
+    #version-card ul li {
+      margin: 6px 0;
     }
 
     /* Tombol di card */
     .card .btn {
-      display: inline-block;
-      margin-top: 15px;
+      margin-top: 18px;
       background: #1a4db3;
       color: #fff;
-      padding: 10px 20px;
+      padding: 10px 22px;
       border-radius: 8px;
-      text-decoration: none;
       font-weight: bold;
       transition: 0.3s;
-      align-self: center; /* selalu ke tengah */
+      align-self: center;
     }
 
     .card .btn:hover {
@@ -170,33 +219,34 @@
     /* Komentar */
     .comments {
       max-width: 700px;
-      margin: 40px auto;
-      padding: 20px;
+      margin: 50px auto;
+      padding: 25px;
       background: #fff;
-      border-radius: 10px;
+      border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
 
     .comments h3 {
-      margin-bottom: 15px;
+      margin-bottom: 20px;
       color: #1a237e;
       text-align: center;
     }
 
     .comments form textarea {
       width: 100%;
-      height: 80px;
+      height: 90px;
       border-radius: 8px;
-      padding: 10px;
-      margin-bottom: 10px;
+      padding: 12px;
+      margin-bottom: 12px;
       border: 1px solid #ccc;
+      resize: none;
     }
 
     .comments form button {
       background: #1a4db3;
       color: white;
       border: none;
-      padding: 10px 20px;
+      padding: 12px 24px;
       border-radius: 8px;
       cursor: pointer;
       font-weight: bold;
@@ -213,29 +263,31 @@
 
     .comment {
       background: #f1f1f1;
-      padding: 10px;
+      padding: 12px;
       border-radius: 8px;
       margin-bottom: 10px;
+      animation: fadeIn 0.4s ease;
+    }
+
+    /* Animations */
+    @keyframes fadeDown {
+      from {opacity: 0; transform: translateY(-20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
     }
 
     /* Responsive Mobile */
     @media (max-width: 768px) {
       header {
-        grid-template-columns: 1fr 1fr 1fr;
-        padding: 10px 15px;
+        padding: 12px 20px;
       }
 
       header .brand {
-        font-size: 1.2rem;
-      }
-
-      header .brand span {
-        font-size: 0.8rem;
-      }
-
-      header .logo-kanan img {
-        height: 45px;
-        width: 45px;
+        font-size: 1.3rem;
       }
 
       .hero {
@@ -243,11 +295,11 @@
       }
 
       .hero h1 {
-        font-size: 1.5rem;
+        font-size: 1.6rem;
       }
 
       .hero p {
-        font-size: 0.9rem;
+        font-size: 0.95rem;
       }
 
       .card {
@@ -265,24 +317,24 @@
       <span>Official Stream</span>
     </div>
     <div class="logo-kanan">
-      <img src="fanglogo.jpg" alt="Logo">
+      <img src="fanglogo.jpg" alt="Logo Vanguard SMP">
     </div>
   </header>
 
   <!-- Hero Section -->
   <section class="hero">
     <h1>Server Minecraft Open Member</h1>
-    <p>Telah memiliki lebih dari 5 grup cabang dan memiliki total <b>300+ member</b> di server.</p>
+    <p>Telah memiliki lebih dari 5 grup cabang dengan total <b>300+ member</b> aktif di server. Gabung dan nikmati petualangan seru bersama komunitas!</p>
     <a href="https://chat.whatsapp.com/LVOkRs5t4bK74g9vtjYAhU" class="btn">JOIN SEKARANG</a>
   </section>
 
   <!-- Informasi -->
   <section class="info-section">
-    <div class="card">
+    <div id="version-card">
       <h3>VERSI MINECRAFT</h3>
       <ul>
         <li><b>JAVA :</b> 1.20.1</li>
-        <li><b>BEDROCK :</b> 1.20.32 - Versi Terbaru Dari Minecraft</li>
+        <li><b>BEDROCK :</b> 1.20.32 (Versi Terbaru)</li>
       </ul>
     </div>
     <div class="card">
@@ -308,19 +360,10 @@
     </div>
   </section>
 
-  <!-- Komentar -->
-  <section class="comments">
-    <h3>Kolom Komentar</h3>
-    <form id="commentForm">
-      <textarea id="commentInput" placeholder="Tulis komentar kamu..."></textarea>
-      <button type="submit">Kirim</button>
-    </form>
-    <div class="comment-list" id="commentList"></div>
-  </section>
 
   <script>
     // Efek fade-in saat scroll
-    const cards = document.querySelectorAll('.card');
+    const cards = document.querySelectorAll('.card, #version-card');
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -330,20 +373,6 @@
     }, { threshold: 0.2 });
 
     cards.forEach(card => observer.observe(card));
-
-    // Komentar
-    const form = document.getElementById('commentForm');
-    const input = document.getElementById('commentInput');
-    const list = document.getElementById('commentList');
-
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      if (input.value.trim() !== '') {
-        const newComment = document.createElement('div');
-        newComment.classList.add('comment');
-        newComment.textContent = input.value;
-        list.prepend(newComment);
-        input.value = '';
       }
     });
   </script>
